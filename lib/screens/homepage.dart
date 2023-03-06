@@ -36,13 +36,18 @@ class _MyHomePageState extends State<MyHomePage> {
           double duesPayable = _calcTaxesUnmarried(taxable);
           _duesPayable = duesPayable.toStringAsFixed(2);
           _takehome = (salary - (duesPayable)).toStringAsFixed(2);
-          print(_takehome);
+          print("Salary: ${salary}");
+          print("Tax amount: ${duesPayable}");
+          print("Return after paying tax: ${_takehome}");
         }
       }
     });
   }
 
 // tax calculation for married couple
+  // var _cat1 = [600000, 800000, 1100000, 2000000];
+  // var _band1 = [600000, 200000, 300000, 900000];
+  // var _rate1 = [0.01, 0.1, 0.2, 0.3, 0.36];
   double _calcTaxesMarried(tsal) {
     if (tsal <= _cat1[0]) {
       _dues[0] = tsal * _rate1[0];
@@ -66,7 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
       _dues[3] = ((tsal - _cat1[2]) * _rate1[3]);
       return _dues[0] + _dues[1] + _dues[2] + _dues[3];
     }
-    if (tsal > _cat1[4]) {
+    if (tsal > _cat1[3]) {
       _dues[0] = _band1[0] * _rate1[0];
       _dues[1] = _band1[1] * _rate1[1];
       _dues[2] = _band1[2] * _rate1[2];
@@ -77,38 +82,65 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   // tax calculation for unmarried single
+  // var _cat2 = [500000, 700000, 1000000, 2000000];
+  // var _band2 = [500000, 200000, 300000, 1000000];
+  // var _rate2 = [0.01, 0.1, 0.2, 0.3, 0.36];
   double _calcTaxesUnmarried(tsal) {
-    if (tsal <= _cat2[0]) {
-      _dues[0] = tsal * _rate2[0];
+    if (tsal <= 500000) {
+      _dues[0] = tsal * 0.01;
       return _dues[0];
-    }
-    if (tsal <= (_cat2[1])) {
-      _dues[0] = _band2[0] * _rate2[0];
-      _dues[1] = ((tsal - _cat2[0]) * _rate2[1]);
+    } else if (tsal <= (700000)) {
+      _dues[0] = 500000 * 0.01;
+      _dues[1] = ((tsal - 500000) * 0.1);
       return _dues[0] + _dues[1];
-    }
-    if (tsal <= _cat2[2]) {
-      _dues[0] = _band2[0] * _rate2[0];
-      _dues[1] = _band2[1] * _rate2[1];
-      _dues[2] = ((tsal - _cat2[1]) * _rate2[2]);
+    } else if (tsal <= 1000000) {
+      _dues[0] = 500000 * 0.01;
+      _dues[1] = 700000 * 0.1;
+      _dues[2] = ((tsal - 700000) * 0.2);
       return _dues[0] + _dues[1] + _dues[2];
-    }
-    if (tsal <= _cat2[3]) {
-      _dues[0] = _band2[0] * _rate2[0];
-      _dues[1] = _band2[1] * _rate2[1];
-      _dues[2] = _band2[2] * _rate2[2];
-      _dues[3] = ((tsal - _cat2[2]) * _rate2[3]);
+    } else if (tsal <= 2000000) {
+      _dues[0] = 500000 * 0.01;
+      _dues[1] = 700000 * 0.1;
+      _dues[2] = 1000000 * 0.2;
+      _dues[3] = ((tsal - 1000000) * 0.3);
       return _dues[0] + _dues[1] + _dues[2] + _dues[3];
-    }
-    if (tsal > _cat2[4]) {
-      _dues[0] = _band2[0] * _rate2[0];
-      _dues[1] = _band2[1] * _rate2[1];
-      _dues[2] = _band2[2] * _rate2[2];
-      _dues[3] = _band2[3] * _rate2[3];
-      _dues[4] = ((tsal - _cat2[4]) * _rate2[4]);
+    } else if (tsal > 2000000) {
+      _dues[0] = _band2[0] * 0.01;
+      _dues[1] = _band2[1] * 0.1;
+      _dues[2] = _band2[2] * 0.2;
+      _dues[3] = _band2[3] * 0.3;
+      _dues[4] = ((tsal - _cat2[3]) * 0.36);
     }
     return _dues[0] + _dues[1] + _dues[2] + _dues[3] + _dues[4];
   }
+  // double _calcTaxesUnmarried(tsal) {
+  //   if (tsal <= _cat2[0]) {
+  //     _dues[0] = tsal * _rate2[0];
+  //     return _dues[0];
+  //   } else if (tsal <= (_cat2[1])) {
+  //     _dues[0] = _band2[0] * _rate2[0];
+  //     _dues[1] = ((tsal - _cat2[0]) * _rate2[1]);
+  //     return _dues[0] + _dues[1];
+  //   } else if (tsal <= _cat2[2]) {
+  //     _dues[0] = _band2[0] * _rate2[0];
+  //     _dues[1] = _band2[1] * _rate2[1];
+  //     _dues[2] = ((tsal - _cat2[1]) * _rate2[2]);
+  //     return _dues[0] + _dues[1] + _dues[2];
+  //   } else if (tsal <= _cat2[3]) {
+  //     _dues[0] = _band2[0] * _rate2[0];
+  //     _dues[1] = _band2[1] * _rate2[1];
+  //     _dues[2] = _band2[2] * _rate2[2];
+  //     _dues[3] = ((tsal - _cat2[2]) * _rate2[3]);
+  //     return _dues[0] + _dues[1] + _dues[2] + _dues[3];
+  //   } else if (tsal > _cat2[4]) {
+  //     _dues[0] = _band2[0] * _rate2[0];
+  //     _dues[1] = _band2[1] * _rate2[1];
+  //     _dues[2] = _band2[2] * _rate2[2];
+  //     _dues[3] = _band2[3] * _rate2[3];
+  //     _dues[4] = ((tsal - _cat2[4]) * _rate2[4]);
+  //   }
+  //   return _dues[0] + _dues[1] + _dues[2] + _dues[3] + _dues[4];
+  // }
 
   bool _isTaxable(amount) {
     return (amount > 0) ? true : false;
@@ -203,7 +235,6 @@ class _MyHomePageState extends State<MyHomePage> {
                       child: RaisedButton(
                         onPressed: () {
                           income = double.parse(_monthlyIncome.text);
-
                           _changeNumber(
                               _monthlyIncome.text, _maritalStatusValue);
                         },
@@ -228,7 +259,16 @@ class _MyHomePageState extends State<MyHomePage> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Text("Your Taxable Amount is ${_takehome}")
+                                  Column(
+                                    children: [
+                                      Text(
+                                          "Your Salary is ${_monthlyIncome.text}"),
+                                      Text(
+                                          "Your Tax Amount is ${_duesPayable}"),
+                                      Text(
+                                          "Your Return Amount is ${_takehome}"),
+                                    ],
+                                  )
                                 ],
                               )
                             ],
